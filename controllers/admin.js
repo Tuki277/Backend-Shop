@@ -81,8 +81,9 @@ exports.addProducts = (req, res, next) => {
     var color = req.body.color
     var quantity = req.body.quantity
     var size = req.body.size
-    data.query('INSERT INTO sanpham (name, image, size, category_id, detail_product, price, color, quantity) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', 
-    [name, image, size, category_id, detail_product, price, color, quantity], (err, rows, fields) => {
+    var brand = req.body.brand
+    data.query('INSERT INTO sanpham (name, image, size, category_id, detail_product, price, color, quantity, brand) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+    [name, image, size, category_id, detail_product, price, color, quantity, brand], (err, rows, fields) => {
         if (err) {
             res.status(404).json({ err })
         }
