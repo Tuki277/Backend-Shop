@@ -21,6 +21,10 @@ router.route('/products/:id')
     .delete(adminControllers.deleteProducts)
     .patch(adminControllers.editProducts)
 
+router.route('/cart/products')
+    .get(adminControllers.getProductInCart)
+    .post(adminControllers.postProductInCart)
+
 router.get('/category/:id/products', adminControllers.getProductById)
 
 module.exports = router

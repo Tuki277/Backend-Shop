@@ -81,9 +81,8 @@ exports.addProducts = (req, res, next) => {
     var color = req.body.color
     var quantity = req.body.quantity
     var size = req.body.size
-    var brand = req.body.brand
-    data.query('INSERT INTO sanpham (name, image, size, category_id, detail_product, price, color, quantity, brand) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', 
-    [name, image, size, category_id, detail_product, price, color, quantity, brand], (err, rows, fields) => {
+    data.query('INSERT INTO sanpham (name, image, size, category_id, detail_product, price, color, quantity) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', 
+    [name, image, size, category_id, detail_product, price, color, quantity], (err, rows, fields) => {
         if (err) {
             res.status(404).json({ err })
         }
@@ -143,6 +142,35 @@ exports.getProductById = (req, res, next) => {
             res.status(404).json({ err })
         } else {
             res.status(200).json({ rows })
+        }
+    })
+}
+
+exports.getProductInCart = (req, res, next) => {
+    data.query('SELECT * FROM giohang', (err, rows, field) => {
+        if (err) {
+            res.status(404).json({ err })
+        } else {
+            res.status(200).json({ rows })
+        }
+    })
+}
+
+exports.postProductInCart = (req, res, next) => {
+    var name = req.body.name
+    var address = req.body.address
+    var phone = req.body.phone
+    var product_id = req.body.product_id
+    var TotalPrice = req.body.TotalPrice
+    var Quantity = req.body.Quantity
+    var note = req.body.note
+    data.query('INSERT INTO giohang (name, address, phone, product_id, TotalPrice, Quantity, note) VALUES (?, ?, ?, ?, ?, ?, ?)', 
+    [name, address, phone, product_id, TotalPrice, Quantity, note ], (err, rows, fields) => {
+        if (err) {
+            res.status(404).json({ err })
+        }
+        else {
+            res.status(201).json({ rows })
         }
     })
 }
