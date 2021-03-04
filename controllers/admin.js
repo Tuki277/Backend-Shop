@@ -156,16 +156,17 @@ exports.getProductInCart = (req, res, next) => {
     })
 }
 
-exports.postProductInCart = (req, res, next) => {
+exports.checkout = (req, res, next) => {
     var name = req.body.name
     var address = req.body.address
     var phone = req.body.phone
-    var product_id = req.body.product_id
-    var TotalPrice = req.body.TotalPrice
-    var Quantity = req.body.Quantity
     var note = req.body.note
-    data.query('INSERT INTO giohang (name, address, phone, product_id, TotalPrice, Quantity, note) VALUES (?, ?, ?, ?, ?, ?, ?)', 
-    [name, address, phone, product_id, TotalPrice, Quantity, note ], (err, rows, fields) => {
+    var orders = req.body.orders
+    var quantity = req.body.quantity
+    var price = req.body.price
+    var totalPrice = req.body.totalPrice
+    data.query('INSERT INTO giohang (name, address, phone, note, orders, quantity, price, totalPrice ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+    [name, address, phone, note, orders, quantity, price, totalPrice ], (err, rows, fields) => {
         if (err) {
             res.status(404).json({ err })
         }

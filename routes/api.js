@@ -23,7 +23,7 @@ router.route('/products/:id')
 
 router.route('/cart/products')
     .get(adminControllers.getProductInCart)
-    .post(adminControllers.postProductInCart)
+    .post(adminControllers.checkout)
 
 router.get('/category/:id/products', adminControllers.getProductById)
 
