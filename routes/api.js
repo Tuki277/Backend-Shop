@@ -1,5 +1,9 @@
 var express = require('express');
 var router = express.Router();
+
+var multer = require('multer');
+var upload = multer({ dest : './public/uploads' }).single('image')
+
 var adminControllers = require('../controllers/admin')
 
 router.post('/login', adminControllers.adminLogin)
@@ -14,16 +18,21 @@ router.route('/category/:id')
 
 router.route('/products')
     .get(adminControllers.getProducts)
-    .post(adminControllers.addProducts)
+    .post(upload, adminControllers.addProducts)
 
 router.route('/products/:id')
     .get(adminControllers.getProductDetail)
     .delete(adminControllers.deleteProducts)
-    .patch(adminControllers.editProducts)
+
+router.route('/products/:id/edit')
+    .put(adminControllers.editProducts)
 
 router.route('/cart/products')
     .get(adminControllers.getProductInCart)
     .post(adminControllers.checkout)
+
+router.route('/cart/products/:id')
+    .delete(adminControllers.deleteProductsInCart)
 
 router.get('/category/:id/products', adminControllers.getProductById)
 
