@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var verifyToken = require('./../config/token')
 
 var multer = require('multer');
 var upload = multer({ dest : './public/uploads' }).single('image')
@@ -35,5 +36,7 @@ router.route('/cart/products/:id')
     .delete(adminControllers.deleteProductsInCart)
 
 router.get('/category/:id/products', adminControllers.getProductById)
+
+router.post('/posts', verifyToken, adminControllers.token)
 
 module.exports = router

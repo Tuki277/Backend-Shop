@@ -1,14 +1,34 @@
 var data = require('../config/connect')
+var jwt = require('jsonwebtoken')
 
 exports.adminLogin = (req, res, next) => {
     var account = req.body.account
     var password = req.body.password
     data.query('SELECT * FROM admin WHERE account = ? AND password = ? ', [account, password], (err, rows, fields) => {
         if (rows.length > 0) {
-            res.status(200).json({ success: true })
+            var token = jwt.sign({username: rows.username}, 'mk')
+            res.status(200).json({ data : {
+                    message : 'thanh cong',
+                    token: token
+                }
+            })
         }
         else {
             res.status(200).json({ success: false })
+        }
+    })
+}
+
+exports.token = (req, res, next) => {
+    jwt.verify(req.token, 'mk', (err, authData) => {
+        console.log(req.token)
+        if (err) {
+            res.sendStatus(403)
+        } else {
+            res.json({
+                message: "posted",
+                authData: authData
+            })
         }
     })
 }
