@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var verifyToken = require('./../config/token')
+var verifyToken = require('./../middleware/authToken')
 
 var multer = require('multer');
 var upload = multer({ dest : './public/uploads' }).single('image')
